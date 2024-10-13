@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3077</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0a0a0a;
+            color: #d4d4d4;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Обучающее окно */
+        .tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .tutorial-content {
+            width: 80%;
+            max-width: 600px;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            text-align: center;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide img {
+            max-width: 70%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .slide h2 {
+            color: #e63946;
+            margin-bottom: 10px;
+        }
+
+        .slide p {
+            color: #a8dadc;
+            margin-bottom: 20px;
+        }
+
+        .arrow-right {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            font-size: 2rem;
+            color: #a8dadc;
+            cursor: pointer;
+        }
+
+        .arrow-right:hover {
+            color: #f1faee;
+        }
+
+        .continue-btn {
+            display: none;
+            margin-top: 20px;
+            background-color: #e63946;
+            border: none;
+            padding: 10px 20px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .continue-btn:hover {
+            background-color: #f1faee;
+            color: #0a0a0a;
+        }
+
+        /* Задания */
+        h1 {
+            text-align: center;
+            color: #e63946;
+            letter-spacing: 5px;
+        }
+
+        .task {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #660000;
+            border: 2px solid #230000;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .task:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.594);
+        }
+
+        .task h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #f1faee;
+        }
+
+        .stars {
+            display: flex;
+            align-items: center;
+        }
+
+        .stars svg {
+            width: 24px;
+            height: 24px;
+            margin-right: 5px;
+            fill: #ffd700;
+            transition: transform 0.2s;
+        }
+
+        .stars svg.inactive {
+            fill: #555;
+        }
+
+        .stars svg:hover {
+            transform: scale(1.2);
+        }
+
+        .task-info {
+            display: none;
+            padding: 20px;
+            background-color: #333;
+            border: 1px solid #444;
+            border-radius: 8px;
+            margin-top: 20px;
+            width: 49cap;
+
+        }
+
+        .task-info h3, .task-info h4 {
+            color: #f1faee;
+        }
+
+        #task-info {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+        }
+
+        #task-info p {
+            color: #a8dadc;
+        }
+
+        
+    </style>
+</head>
+<body>
+
+    <!-- Обучающее окно -->
+    <div class="tutorial-overlay" id="tutorial">
+        <div class="tutorial-content">
+            <!-- Слайд 1 -->
+            <div class="slide active" id="slide1">
+                <img src="slide1.jpeg" alt="Картинка 1">
+                <h2>Добро пожаловать в name Club</h2>
+                <p>Наш клуб — это место для тех, кто любит разгадывать сложные загадки и решать интеллектуальные головоломки. Вступив в нас, вы окунетесь в мир тайн и скрытых посланий.</p>
+                <span class="arrow-right" onclick="nextSlide()">&#9654;</span>
+            </div>
+            <!-- Слайд 2 -->
+            <div class="slide" id="slide2">
+                <img src="slide2.jpg" alt="Картинка 2">
+                <h2>Призы для победителей</h2>
+                <p>Участники, которые справятся с самыми сложными задачами, получат эксклюзивные призы и признание в сообществе. Покажи свои способности и выиграй!</p>
+                <button class="continue-btn" id="continue-btn" onclick="closeTutorial()">Продолжить</button>
+            </div>
+        </div>
+    </div>
+
+    <h1>3301</h1>
+
+    <!-- Задание 1 -->
+    <div class="task" data-difficulty="3" data-info=
+    "30.75, 57.32, 07.53, 19.84, 12.67, 
+    45.21, 88.03, 63.45, 29.18, 74.60, 
+    93.29, 53.77, 56.92, 03.40, 38.64, 
+    67.89, 41.14, 75.66, 14.82, 99.11, 
+    21.45, 80.90, 48.33, 11.56, 06.24, 
+    92.12, 34.78, 25.59, 86.71, 52.03, 
+    41.34, 04.76, 36.25, 64.87, 10.40, 
+    60.51, 43.80, 09.92, 22.88, 70.11, 
+    15.37, 97.68, 26.90, 05.73, 32.19, 
+    62.48, 77.14, 08.56, 50.29, 95.22, 
+    17.63, 35.81, 78.94, 01.86, 42.77, 
+    11.05, 83.35, 69.50, 30.48, 27.31, 
+    66.18, 49.74, 58.26, 73.88, 39.62, 
+    07.45, 24.90, 18.33, 40.97, 68.51, 
+    02.64, 72.59, 59.12, 31.35, 76.04, 
+    15.90, 88.35, 13.68, 46.23, 20.01, 
+    94.76, 55.28, 29.27, 33.49, 08.90, 
+    45.21, 71.14, 57.76      
+    ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ
+    ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ
+    ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ
+    ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ
+    ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ
+    Поздравляю! Если вы нашли координаты, значит, вы успешно прошли первый этап.
+
+    Чтобы продвинуться дальше и получить задание второго этапа, вам необходимо найти ключ испоьзуя координаты которые вы нашли, это откроет путь к новому этапу.
+    
+    Обратите внимание на самую необычную деталь в этом месте — именно на ней может скрываться ваш ключ.
+    
+    Удачи в поисках! (Это место тебе знакомо, и ты не раз проходил мимо него)" data-question="(3_5_1/).((10_5_1/)(13_2_/2)), (10_4_1/).((14_5_/2)(2_6_1/))">
+
+    
+        <h2>Задание 1</h2>
+        
+        <div class="stars">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.3 4.2 1 6-5.7-3L6 19l1-6L2.7 9l6-.9L12 2z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.3 4.2 1 6-5.7-3L6 19l1-6L2.7 9l6-.9L12 2z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.3 4.2 1 6-5.7-3L6 19l1-6L2.7 9l6-.9L12 2z"/></svg>
+            <svg class="inactive" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.3 4.2 1 6-5.7-3L6 19l1-6L2.7 9l6-.9L12 2z"/></svg>
+            <svg class="inactive" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.3 4.2 1 6-5.7-3L6 19l1-6L2.7 9l6-.9L12 2z"/></svg>
+        </div>
+    </div>
+    
+
+    <!-- Задание 2 -->
+    <div class="task" data-difficulty="5" data-info="Информация о задании 2: Вам нужно расшифровать сложный код, используя знания о шифровании." data-question="Задание 2: Расшифруйте код, который спрятан в тексте.">
+        <h2>Задание 2</h2>
+        <div class="stars">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.3 4.2 1 6-5.7-3L6 19l1-6L2.7 9l6-.9L12 2z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.3 4.2 1 6-5.7-3L6 19l1-6L2.7 9l6-.9L12 2z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.3 4.2 1 6-5.7-3L6 19l1-6L2.7 9l6-.9L12 2z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.3 4.2 1 6-5.7-3L6 19l1-6L2.7 9l6-.9L12 2z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.3 4.2 1 6-5.7-3L6 19l1-6L2.7 9l6-.9L12 2z"/></svg>
+        </div>
+    </div>
+
+    <div class="task-info" id="task-info">
+        <h3 id="task-title"></h3>
+        <h4 id="task-question"></h4>
+        <p id="task-details"></p>
+    </div>
+
+    <script>
+        // Функция для перехода к следующему слайду
+        function nextSlide() {
+            document.getElementById('slide1').classList.remove('active');
+            document.getElementById('slide2').classList.add('active');
+            document.getElementById('continue-btn').style.display = 'block';
+        }
+
+        // Функция для закрытия обучающего окна
+        function closeTutorial() {
+            document.getElementById('tutorial').style.display = 'none';
+        }
+
+        // Обработчик кликов по заданиям
+        document.querySelectorAll('.task').forEach(task => {
+            task.addEventListener('click', function() {
+                const title = this.querySelector('h2').textContent;
+                const question = this.getAttribute('data-question');
+                const info = this.getAttribute('data-info');
+
+                document.getElementById('task-title').textContent = title;
+                document.getElementById('task-question').textContent = question;
+                document.getElementById('task-details').textContent = info;
+
+                document.getElementById('task-info').style.display = 'block';
+            });
+        });
+    </script>
+
+</body>
+</html>
